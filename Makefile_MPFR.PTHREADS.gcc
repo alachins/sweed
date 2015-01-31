@@ -1,0 +1,42 @@
+
+# Makefile for the parallel version that computes an analytical SFS
+
+CC = gcc
+
+CFLAGS =  -O3 -Wall -D_USE_PTHREADS -D_GNU_SOURCE -D_ANALYTICAL_SFS
+
+LIBRARIES = -lm -lpthread -lmpfr -lgmp 
+
+EXECNAME = SweeD-P
+
+OBJS = SweeD.o SweeD_Input.o SweeD_Kernel.o SweeD_SFS.o SweeD_CLR.o SweeD_BFGS.o SweeD_EI.o
+
+all: $(EXECNAME)
+
+SweeD-P : $(OBJS)
+	$(CC) $(CFLAGS) -o $(EXECNAME) $(OBJS) $(LIBRARIES)
+
+SweeD.o: SweeD.c SweeD.h
+	$(CC) $(CFLAGS) -c SweeD.c
+
+SweeD_Input.o: SweeD_Input.c 
+	$(CC) $(CFLAGS) -c SweeD_Input.c
+
+SweeD_Kernel.o: SweeD_Kernel.c 
+	$(CC) $(CFLAGS) -c SweeD_Kernel.c
+
+SweeD_SFS.o: SweeD_SFS.c 
+	$(CC) $(CFLAGS) -c SweeD_SFS.c
+
+SweeD_CLR.o: SweeD_CLR.c 
+	$(CC) $(CFLAGS) -c SweeD_CLR.c
+
+SweeD_BFGS.o: SweeD_BFGS.c 
+	$(CC) $(CFLAGS) -c SweeD_BFGS.c
+
+SweeD_EI.o: SweeD_EI.c
+	    $(CC) $(CFLAGS) -c SweeD_EI.c
+
+clean:
+	rm $(EXECNAME)
+	rm $(OBJS)
