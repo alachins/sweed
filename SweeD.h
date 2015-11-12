@@ -68,7 +68,7 @@
 #define SEQNAMESIZE 1000
 #define DECREASE 0.99
 #define MINSNPPERWINDOW 5
-#define STRINGLENGTH 100
+#define STRINGLENGTH 1000
 #define VCF_HLENGTH 9 // number of fields in the VCF header line
 #define MAX_CHROM_NAME_VCF 100
 #define MAX_STATES_VCF 5
