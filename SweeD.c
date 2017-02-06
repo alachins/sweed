@@ -731,6 +731,21 @@ int main(int argc, char** argv)
 		free(chromList);
 	}
 
+
+	
+	if(alignment->outgroupName != NULL)
+	{
+		free(alignment->outgroupName);
+		alignment->outgroupName = NULL;
+	}
+
+	if(alignment->outgroupSequence != NULL)
+	{
+		free(alignment->outgroupSequence);
+		alignment->outgroupSequence = NULL;
+	}
+
+
 	free(alignment);
 
 	if(fpIn!=NULL)

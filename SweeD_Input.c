@@ -82,9 +82,9 @@ void printVersion (FILE * fp)
 */
 
  	fprintf(fp,"\n\n");
-	fprintf(fp,"\tVersion:\t\t3.3.1\n\n");
-	fprintf(fp,"\tReleased:\t\tJanuary 2015\n\n");
-	fprintf(fp, "\tComment:\t\tCan process only a subset of the VCF chromosomes in the input file\n\n");
+	fprintf(fp,"\tVersion:\t\t3.3.2\n\n");
+	fprintf(fp,"\tReleased:\t\tApril 2015\n\n");
+	fprintf(fp, "\tComment:\t\tCorrects some bugs on handling the outgroup\n\n");
 	fprintf(fp,"\n\n");
 
   
@@ -1734,8 +1734,8 @@ void initializeAlignmentVariables()
   alignment->x = NULL;
   alignment->n = NULL;
   alignment->folded = NULL;
-  alignment->outgroupName = NULL;
-  alignment->outgroupSequence = NULL;
+  /* alignment->outgroupName = NULL; */
+  /* alignment->outgroupSequence = NULL; */
   alignment->n_pat = NULL;
   alignment->x_pat = NULL;
   alignment->f_pat = NULL;
@@ -1797,17 +1797,17 @@ void freeAlignment()
 		alignment->folded = NULL;
 	}
 
-	if(alignment->outgroupName != NULL)
-	{
-		free(alignment->outgroupName);
-		alignment->outgroupName = NULL;
-	}
+	/* if(alignment->outgroupName != NULL) */
+	/* { */
+	/* 	free(alignment->outgroupName); */
+	/* 	alignment->outgroupName = NULL; */
+	/* } */
 
-	if(alignment->outgroupSequence != NULL)
-	{
-		free(alignment->outgroupSequence);
-		alignment->outgroupSequence = NULL;
-	}
+	/* if(alignment->outgroupSequence != NULL) */
+	/* { */
+	/* 	free(alignment->outgroupSequence); */
+	/* 	alignment->outgroupSequence = NULL; */
+	/* } */
 
 	if(alignment->n_pat != NULL)
 	{
@@ -1954,17 +1954,17 @@ void freeAlignment_noSNPs()
 		alignment->folded = NULL;
 	}
 
-	if(alignment->outgroupName != NULL)
-	{
-		free(alignment->outgroupName);
-		alignment->outgroupName = NULL;
-	}
+	/* if(alignment->outgroupName != NULL) */
+	/* { */
+	/* 	free(alignment->outgroupName); */
+	/* 	alignment->outgroupName = NULL; */
+	/* } */
 
-	if(alignment->outgroupSequence != NULL)
-	{
-		free(alignment->outgroupSequence);
-		alignment->outgroupSequence = NULL;
-	}
+	/* if(alignment->outgroupSequence != NULL) */
+	/* { */
+	/* 	free(alignment->outgroupSequence); */
+	/* 	alignment->outgroupSequence = NULL; */
+	/* } */
 
 	if(alignment->n_pat != NULL)
 	{

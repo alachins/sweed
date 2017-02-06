@@ -37,9 +37,6 @@ No Windows version is yet available.
 
 Change Log
 ----------
-
-Version updates shown with -v.
-
 March 2014: SweeD v3.2.4 (it can read the ms-like output of msABC)
 
 October 2013: SweeD v3.2.1 (fixed bug in VCF format associated with ALT state as '.')

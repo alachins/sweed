@@ -17,7 +17,6 @@ OBJS = SweeD.o SweeD_Input.o SweeD_Kernel.o SweeD_SFS.o SweeD_CLR.o SweeD_BFGS.o
 all: $(EXECNAME)
 
 SweeD-P-C : $(OBJS)
-	  rm $(OBJS)
 	  $(CC) $(CFLAGS) -o $(EXECNAME) $(OBJS) $(LIBRARIES) $(DMTCPAWARELIB)
 
 SweeD.o: SweeD.c 

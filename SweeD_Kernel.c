@@ -128,10 +128,15 @@ t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startP
 	t_sfs ad=0.0, likelihood=0.0, pr = 0.0;
 
 	(*sweepWidth)=0;
+
+	int badFlag = 0;
 	
 
 	for(i=startPos;i>-1;i--)
 	{
+
+	  badFlag = 0;
+
 		if(alignment->positionsInd[i]!=-1)
 		{
 			
@@ -148,7 +153,7 @@ t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startP
 			{
 
 				(*sweepWidth)++;
-
+				
 				n = alignment->n[i];
 				x = alignment->x[i];	
 
@@ -158,7 +163,17 @@ t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startP
 					pr = splint(x, n, GRIDSIZE, ad);
 
 				assert(pr>=0.0);
-				assert(pr<=1.0+1e-6);
+
+					
+				if(pr > 1.0+1e-6)
+				  {
+				    fprintf(stderr, "TODO.... Warning: A probability measurement is %f > 1.0... for the gridpoint %i\n", pr, i);
+				    pr = 1.0;
+
+				    badFlag = 1;
+				  }
+					
+				//assert(pr<=1.0+1e-6);
 
 				if(pr > 1.0)
 					pr = 1.0;
@@ -173,23 +188,38 @@ t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startP
 					if (x!=n-x)
 					{
 						if(ad < alignment->gridADs[0])
-							pr += alignment->gridProbs[n-alignment->minn][x-alignment->startSFS][0] * alignment->SFS[x];
+						  pr += alignment->gridProbs[n-alignment->minn][x-alignment->startSFS][0] * alignment->SFS[x];
 						else
-							pr += splint(x, n, GRIDSIZE, ad) * alignment->SFS[x];
-
+						  pr += splint(x, n, GRIDSIZE, ad) * alignment->SFS[x];
+						
 						pr = pr/(alignment->SFS[x] + alignment->SFS[n-x]);
-
+						
 						assert(pr>=0.0);
-						assert(pr<=1.0+1e-6);
+						
+						
+						if(pr > 1.0+1e-6)
+						  {
+						    fprintf(stderr, "TODO.... Warning: A probability measurement is %f > 1.0... for the gridpoint %i\n", pr, i);
+						    pr = 1.0;
 
+						    badFlag = 1;
+						  }
+						
+						//assert(pr<=1.0+1e-6);
+						
+						
 						if(pr > 1.0)
-							pr = 1.0;
+						  pr = 1.0;
 					}
 				}
     				
 				assert(i>=0);
 				assert(i<alignment->segsites);
-    				likelihood += log(pr) - alignment->baseLikelihood[i];				
+
+				if(badFlag == 0)
+				  likelihood += log(pr) - alignment->baseLikelihood[i];				
+				else
+				  likelihood += 0;
 
 			}
 			else
@@ -202,6 +232,9 @@ t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startP
 
 	for(i=startPos+1;i<alignment->segsites;i++)
 	{
+
+	  badFlag = 0;
+
 		if(alignment->positionsInd[i]!=-1)
 		{
 			sweepDist = abs(alignment->positionsInd[i]-sweepPosition);			
@@ -229,7 +262,17 @@ t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startP
 			
 
 				assert(pr>=0.0);
-				assert(pr<=1.0+1e-6);
+				
+				
+				if(pr > 1.0+1e-6)
+				  {
+				    fprintf(stderr, "TODO.... Warning: A probability measurement is %f > 1.0... for the gridpoint %i\n", pr, i);
+				    pr = 1.0;
+
+				    badFlag = 1;
+				  }
+				
+				//assert(pr<=1.0+1e-6);
 
 				if(pr > 1.0)
 					pr = 1.0;
@@ -251,15 +294,26 @@ t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startP
 						pr = pr/(alignment->SFS[x] + alignment->SFS[n-x]);
 
 						assert(pr>=0.0);
-						assert(pr<=1.0+1e-6);
+
+						if(pr > 1.0+1e-6)
+						  {
+						    fprintf(stderr, "TODO.... Warning: A probability measurement is %f > 1.0... for the gridpoint %i\n", pr, i);
+						    pr = 1.0;
+
+						    badFlag = 1;
+						  }
 
 						if(pr > 1.0)
 							pr = 1.0;
 					}
 
 				}
+				
+				if(badFlag == 0)
+				  likelihood += log(pr) - alignment->baseLikelihood[i];				
+				else
+				  likelihood += 0; 
 
-    				likelihood += log(pr) - alignment->baseLikelihood[i];				
 
 			}
 			else
