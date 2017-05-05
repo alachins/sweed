@@ -271,7 +271,8 @@ int main(int argc, char** argv)
 	     clrReportsFileName[INFILENAMESIZE], 
 	     warnFileName[INFILENAMESIZE],
 	     sampleVCFfileName[INFILENAMESIZE],
-	     chromVCFfileName[INFILENAMESIZE];
+	     chromVCFfileName[INFILENAMESIZE],
+	     sfoFileName_base[INFILENAMESIZE];
 
 	FILE *fpIn=NULL, *fpInfo=NULL, *fpWarnings=NULL, *fpReport=NULL, *fpSFS=NULL, *fpSFSo=NULL, *fpSFo=NULL, *fpVCFsamples=NULL, *fpVCFchroms=NULL;
 	
@@ -389,11 +390,20 @@ int main(int argc, char** argv)
 	
 #endif
 	
-	if(onlySF!=0)
+	if(onlySF!=0 && reports==0)
 	{
 		fpSFo = fopen(sfoFileName,"w");
 		fprintf(fpSFo,"position\tx\tn\tfolded\n");
 	}
+
+	if(onlySF!=0 && reports==1)
+	{
+		fpSFo = fopen(sfoFileName,"w");
+		strcpy(sfoFileName_base, sfoFileName);
+		//fprintf(fpSFo,"position\tx\tn\tfolded\n");
+	}
+
+
 
 	if (fileFormat==MS_FORMAT || fileFormat==MACS_FORMAT)
 		fpWarnings = fopen(warnFileName, "w");
@@ -475,7 +485,7 @@ int main(int argc, char** argv)
 		
 		  maxLH=0.;
 
-		  alignment_analysis_code = readAlignment(fpIn, fileFormat, fpInfo, fpSFo, minsnps_threshold_user, alignmentIndex);
+		  alignment_analysis_code = readAlignment(fpIn, fileFormat, fpInfo, fpSFo, minsnps_threshold_user, alignmentIndex); // fpSFo not used here
 
 		  if(processed_chroms==chromList_SZ)
 			break;
@@ -555,14 +565,41 @@ int main(int argc, char** argv)
 		  
 			  alignmentIndex++;
 		  
-			  if(nxt_alignment==1 && fpSFo!=NULL)
+			  if(nxt_alignment==1 && fpSFo!=NULL && reports==0)
 			    fprintf(fpSFo, "\n// %d\n",alignmentIndex);
 		 
 			  continue; 
 			}
 
-		      
+		if(onlySF==1 && reports==1)
+		{
+			if(fpSFo!=NULL)
+				fclose(fpSFo);
+
+			strcpy(sfoFileName, sfoFileName_base);
+
+			char str[STRINGLENGTH];
+			sprintf(str, "%d", alignmentIndex);
+
+			strncat(sfoFileName,".",INFILENAMESIZE-strlen(sfoFileName));
+			strncat(sfoFileName,str,INFILENAMESIZE-strlen(sfoFileName));
+			
+			printf("%s\n", sfoFileName);
+
+			fpSFo = fopen(sfoFileName,"w");
+			fprintf(fpSFo,"position\tx\tn\tfolded\n");			
+		}
+	      
 		      updateSF(fpSFo);
+
+		if(onlySF==1 && reports==1)
+		{
+			if(fpSFo!=NULL)
+			{
+				fclose(fpSFo);
+				fpSFo = NULL;
+			}
+		}
 
 		      
 		      
