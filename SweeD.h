@@ -320,10 +320,11 @@ void commandLineParser(int argc, char** argv,
 		       char * chromfile_i,
 		       int * generateVCFchromlist,
 		       int * minsnps_threshold_user,
-		       int * reports
+		       int * reports,
+		       double * maf
 );
 
-void removeMonomorphicSites (int strictPolymorphic, int monomorphic, FILE * fp);
+void removeMonomorphicSites (int strictPolymorphic, int monomorphic, double maf_thres, FILE * fp);
 
 t_sfs computeBaseLikelihood();
 t_sfs getAlpha (int sweepPosition, t_sfs * likelihood);

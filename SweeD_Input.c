@@ -81,10 +81,17 @@ void printVersion (FILE * fp)
 	fprintf(fp,"\n\n");
 */
 
- 	fprintf(fp,"\n\n");
+ 	/*fprintf(fp,"\n\n");
 	fprintf(fp,"\tVersion:\t\t3.3.2\n\n");
 	fprintf(fp,"\tReleased:\t\tApril 2015\n\n");
 	fprintf(fp, "\tComment:\t\tCorrects some bugs on handling the outgroup\n\n");
+	fprintf(fp,"\n\n");
+	*/
+
+	fprintf(fp,"\n\n");
+	fprintf(fp,"\tVersion:\t\t3.3.3\n\n");
+	fprintf(fp,"\tReleased:\t\tMarch 2018\n\n");
+	fprintf(fp, "\tComment:\t\tAdded -maf input argument\n\n");
 	fprintf(fp,"\n\n");
 
   
@@ -151,6 +158,7 @@ void printHelp (FILE * fp)
 	fprintf(fp,"\t[-chromList filename]\n");
 	fprintf(fp,"\t[-chromList_out filename]\n");
 	fprintf(fp,"\t[-reports]\n");
+	fprintf(fp,"\t[-maf threshold]\n");
 	fprintf(fp,"\n\n");
 	
 	fprintf(fp,"\t-name <STRING>\t\tSpecifies a name for the run and the output files.\n\n");
@@ -178,6 +186,7 @@ void printHelp (FILE * fp)
 	fprintf(fp,"\t-chromList <STRING>\tTo be used with VCF files in order to specify which chromosomes to analyze.\n\n");
 	fprintf(fp,"\t-chromList_out <STRING> To generate a list of the chromosomes in the input VCF file.\n\n");
 	fprintf(fp,"\t-reports\t\tTo generate each alignment report in a separate file.\n\n");
+	fprintf(fp,"\t-maf <FLOAT>\t\tTo exclude SNPs with minor allele frequency < threshold.\n\n");
 	fprintf(fp,"\n\n");
 }
 
@@ -381,7 +390,8 @@ void commandLineParser(int argc, char** argv,
 		       char * chromfile_i,
 		       int * generateVCFchromlist,
 		       int * minsnps_threshold_user,
-		       int * reports)
+		       int * reports,
+		       double * maf)
 {
 
 #ifdef _USE_PTHREADS
@@ -808,7 +818,35 @@ void commandLineParser(int argc, char** argv,
 			}	
 
 			continue;
-		}	
+		}
+
+		if(!strcmp(argv[i], "-maf"))
+		  {
+		    if (i != argc-1)
+			{
+				
+				if(argv[i+1][0]=='-')
+				{
+					fprintf(stderr, "\n ERROR: Value is missing after argument -maf\n\n");
+					exit(0);
+				}
+				
+				*maf = atof(argv[++i]);
+
+				if(*maf<0.0 || *maf>1.0)
+				{
+					fprintf(stderr, "\n ERROR: Invalid MAF value (valid: 0.0-1.0)\n\n");
+					exit(0);
+				}
+			} 
+			else
+			{
+				fprintf(stderr, "\n ERROR: Value is missing after argument -maf\n\n");
+				exit(0);	
+			}
+			continue;
+		}
+	
 
 
 #ifdef _USE_PTHREADS
@@ -3977,7 +4015,7 @@ void updateSF(FILE * fpSFo)
 }
 
 
-void removeMonomorphicSites (int strictPolymorphic, int monomorphic, FILE * fp)
+void removeMonomorphicSites (int strictPolymorphic, int monomorphic, double maf_thres, FILE * fp)
 {
 	int i, counter=0;
 
@@ -3987,6 +4025,23 @@ void removeMonomorphicSites (int strictPolymorphic, int monomorphic, FILE * fp)
 			alignment->positionsInd[i]=-1;
 			counter++;
 		}
+
+	if(maf_thres>=0.0 && maf_thres<=1.0)
+	for(i=0;i<alignment->segsites;i++)
+	{
+		if(alignment->positionsInd[i]!=-1)
+		{
+			double ch1 = ((double)alignment->x[i])/((double)alignment->n[i]);
+			double ch2 = ((double)(alignment->n[i] - alignment->x[i]))/((double)alignment->n[i]);
+			if(ch1<maf_thres || ch2<maf_thres)
+			{
+				alignment->positionsInd[i]=-1;
+				counter++;
+			}
+		}
+	}
+
+	
 
 	if( monomorphic == 1 && strictPolymorphic == 1)
 	  {

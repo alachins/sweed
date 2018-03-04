@@ -72,7 +72,7 @@ void printHeading (FILE * fp)
 	fprintf(fp,"\n\n                                      _______________");
 	fprintf(fp,"\n\n                                           SweeD");
 	fprintf(fp,"\n                                      _______________");
-	fprintf(fp,"\n\n\n\n SweeD version 3.3.1 released by Nikolaos Alachiotis and Pavlos Pavlidis in January 2015.\n");
+	fprintf(fp,"\n\n\n\n SweeD version 3.3.3 released by Nikolaos Alachiotis and Pavlos Pavlidis in March 2018.\n");
 }
 
 void printRunInfo (FILE * fp, int argc, char ** argv)
@@ -260,7 +260,7 @@ int main(int argc, char** argv)
 
 	unsigned int seed = 0;
 
-	double time0, time1, totalTimeL=.0, totalTimeG0 = gettime(), totalTimeG1, maxLH=0., maxALPHA=0., maxPOS=0., growthRate = 0.;
+	double time0, time1, totalTimeL=.0, totalTimeG0 = gettime(), totalTimeG1, maxLH=0., maxALPHA=0., maxPOS=0., growthRate = 0., maf= 0.;
 	
 	char inputFileName[INFILENAMESIZE],
 	     sfsFileName[INFILENAMESIZE],
@@ -329,7 +329,8 @@ int main(int argc, char** argv)
 			  chromVCFfileName,
 			  &generateVCFchromlist,
 			  &minsnps_threshold_user,
-			  &reports);
+			  &reports,
+			  &maf);
 
 
 	alignment = (alignment_struct *)malloc(sizeof(alignment_struct));
@@ -548,7 +549,7 @@ int main(int argc, char** argv)
 		      if(analyticalSFS==2)
 			assert(sequences>=alignment->sequences);
 	#endif
-		      removeMonomorphicSites (strictPolymorphic, monomorphic, fpInfo);
+		      removeMonomorphicSites (strictPolymorphic, monomorphic, maf, fpInfo);
 
 		      
 		      if(alignment -> segsites < MINSNPS_THRESHOLD || alignment -> segsites < minsnps_threshold_user)
