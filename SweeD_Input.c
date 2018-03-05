@@ -4054,7 +4054,7 @@ void removeMonomorphicSites (int strictPolymorphic, int monomorphic, double maf_
 	  
 	  for(i=0;i<alignment->segsites;i++)
 	    {
-	      if(alignment->n[i] == 0)
+	      if(alignment->positionsInd[i]==-1)//if(alignment->n[i] == 0)
 		continue;
 	      
 	      if( (alignment->n[i]==alignment->sequences && (alignment->x[i]==0 || alignment->x[i]==alignment->n[i]) ) ||
