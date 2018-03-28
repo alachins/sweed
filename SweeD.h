@@ -321,7 +321,8 @@ void commandLineParser(int argc, char** argv,
 		       int * generateVCFchromlist,
 		       int * minsnps_threshold_user,
 		       int * reports,
-		       double * maf
+		       double * maf,
+		       int * fileFormatMBS
 );
 
 void removeMonomorphicSites (int strictPolymorphic, int monomorphic, double maf_thres, FILE * fp);
@@ -354,7 +355,7 @@ void freeAlignment_noSNPs();
 
 void initializeAlignmentVariables();
 
-int readAlignment(FILE *fp, int format, FILE * fpInfo, FILE * sfO, int minsnps_threshold_user, int alignmentIndex);
+int readAlignment(FILE *fp, int format, FILE * fpInfo, FILE * sfO, int minsnps_threshold_user, int alignmentIndex, int fileFormatMBS);
 
 void compressAlignment(alignment_struct *alignment);
 

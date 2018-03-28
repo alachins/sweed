@@ -72,7 +72,7 @@ void printHeading (FILE * fp)
 	fprintf(fp,"\n\n                                      _______________");
 	fprintf(fp,"\n\n                                           SweeD");
 	fprintf(fp,"\n                                      _______________");
-	fprintf(fp,"\n\n\n\n SweeD version 3.3.3 released by Nikolaos Alachiotis and Pavlos Pavlidis in March 2018.\n");
+	fprintf(fp,"\n\n\n\n SweeD version 3.3.4 released by Nikolaos Alachiotis and Pavlos Pavlidis in April 2018.\n");
 }
 
 void printRunInfo (FILE * fp, int argc, char ** argv)
@@ -254,7 +254,7 @@ int main(int argc, char** argv)
 	  monomorphic = 0, i, threads = 1, curSFSsize=10, sequences=-1, analyticalSFS=0, strictPolymorphic = 0, generateVCFsamplelist=0,
 	  generateVCFchromlist=0,
 	  minsnps_threshold_user = MINSNPS_THRESHOLD,
-	  reports=0;
+	  reports=0, fileFormatMBS=0;
 
 	unsigned char userSetFolded = 0, userSFS=0, onlySFS=0, onlySF=0;
 
@@ -330,7 +330,8 @@ int main(int argc, char** argv)
 			  &generateVCFchromlist,
 			  &minsnps_threshold_user,
 			  &reports,
-			  &maf);
+			  &maf,
+			  &fileFormatMBS);
 
 
 	alignment = (alignment_struct *)malloc(sizeof(alignment_struct));
@@ -359,8 +360,10 @@ int main(int argc, char** argv)
 
 	introMsg(argc, argv, fpInfo);
 
-	fprintf(stdout, "\n Input file format (0:ms, 1:fasta, 2:macs, 3:vcf, 4:sf): %d\n", fileFormat);
-	fprintf(fpInfo, "\n Input file format (0:ms, 1:fasta, 2:macs, 3:vcf, 4:sf): %d\n", fileFormat);
+	int fileFormatPrint = (fileFormat==0&&fileFormatMBS==1)==1?5:fileFormat;	
+
+	fprintf(stdout, "\n Input file format (0:ms, 1:fasta, 2:macs, 3:vcf, 4:sf, 5:mbs): %d\n", fileFormatPrint);
+	fprintf(fpInfo, "\n Input file format (0:ms, 1:fasta, 2:macs, 3:vcf, 4:sf, 5:mbs): %d\n", fileFormatPrint);
 
 	if(sampleVCFfileName[0] != '\0' && fileFormat==3)
 	{
@@ -486,7 +489,7 @@ int main(int argc, char** argv)
 		
 		  maxLH=0.;
 
-		  alignment_analysis_code = readAlignment(fpIn, fileFormat, fpInfo, fpSFo, minsnps_threshold_user, alignmentIndex); // fpSFo not used here
+		  alignment_analysis_code = readAlignment(fpIn, fileFormat, fpInfo, fpSFo, minsnps_threshold_user, alignmentIndex, fileFormatMBS); // fpSFo not used here
 
 		  if(processed_chroms==chromList_SZ)
 			break;

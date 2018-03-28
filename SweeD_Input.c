@@ -88,12 +88,17 @@ void printVersion (FILE * fp)
 	fprintf(fp,"\n\n");
 	*/
 
-	fprintf(fp,"\n\n");
+	/*fprintf(fp,"\n\n");
 	fprintf(fp,"\tVersion:\t\t3.3.3\n\n");
 	fprintf(fp,"\tReleased:\t\tMarch 2018\n\n");
 	fprintf(fp, "\tComment:\t\tAdded -maf input argument\n\n");
-	fprintf(fp,"\n\n");
+	fprintf(fp,"\n\n");*/
 
+	fprintf(fp,"\n\n");
+	fprintf(fp,"\tVersion:\t\t3.3.4\n\n");
+	fprintf(fp,"\tReleased:\t\tApril 2018\n\n");
+	fprintf(fp, "\tComment:\t\tAdded -mbs input argument\n\n");
+	fprintf(fp,"\n\n");
   
   	/* fprintf(fp,"\n\n"); */
 	/* fprintf(fp,"\tVersion:\t\t3.2.4\n\n"); */
@@ -159,6 +164,7 @@ void printHelp (FILE * fp)
 	fprintf(fp,"\t[-chromList_out filename]\n");
 	fprintf(fp,"\t[-reports]\n");
 	fprintf(fp,"\t[-maf threshold]\n");
+	fprintf(fp,"\t[-mbs]\n");
 	fprintf(fp,"\n\n");
 	
 	fprintf(fp,"\t-name <STRING>\t\tSpecifies a name for the run and the output files.\n\n");
@@ -187,6 +193,7 @@ void printHelp (FILE * fp)
 	fprintf(fp,"\t-chromList_out <STRING> To generate a list of the chromosomes in the input VCF file.\n\n");
 	fprintf(fp,"\t-reports\t\tTo generate each alignment report in a separate file.\n\n");
 	fprintf(fp,"\t-maf <FLOAT>\t\tTo exclude SNPs with minor allele frequency < threshold.\n\n");
+	fprintf(fp,"\t-mbs\t\tTo specify that the input file is in mbs format (will be processed as if it was ms).\n\n");
 	fprintf(fp,"\n\n");
 }
 
@@ -391,7 +398,8 @@ void commandLineParser(int argc, char** argv,
 		       int * generateVCFchromlist,
 		       int * minsnps_threshold_user,
 		       int * reports,
-		       double * maf)
+		       double * maf,
+		       int * fileFormatMBS)
 {
 
 #ifdef _USE_PTHREADS
@@ -669,6 +677,12 @@ void commandLineParser(int argc, char** argv,
 			printVersion (stdout);
 
 			exit(0);
+		}
+
+		if(!strcmp(argv[i], "-mbs"))
+		{
+			*fileFormatMBS = 1;
+			continue;
 		}
 
 		/*if(!strcmp(argv[i], "-recmap"))
@@ -4315,7 +4329,7 @@ int readAlignmentMACS(FILE *fp, alignment_struct *alignment, FILE *fpInfo, FILE 
 
 }
 
-int readAlignmentMS(FILE *fp, alignment_struct *alignment, FILE * fpInfo, FILE *fpSFo, int minsnps_threshold_user, int alignmentIndex)
+int readAlignmentMS(FILE *fp, alignment_struct *alignment, FILE * fpInfo, FILE *fpSFo, int minsnps_threshold_user, int alignmentIndex, int fileFormatMBS)
 {
 
 	fprintf(stdout," Alignment %d\n",alignmentIndex);			
@@ -4327,7 +4341,9 @@ int readAlignmentMS(FILE *fp, alignment_struct *alignment, FILE * fpInfo, FILE *
   /* get rid of the first line information */
   while( (ent = fgetc(fp) ) != '\n');
 
-  int i, temp = fscanf(fp,"%s %d", stringtemp, &alignment->segsites); 
+  int i, temp = fscanf(fp,"%s %d", stringtemp, &alignment->segsites);
+
+  alignment->segsites = fileFormatMBS==1? alignment->segsites-1:alignment->segsites;
 
   if(strcmp(stringtemp, "segsites:") != 0 )
     {
@@ -4344,8 +4360,10 @@ int readAlignmentMS(FILE *fp, alignment_struct *alignment, FILE * fpInfo, FILE *
 
 	  
   alignment->positions = malloc(sizeof(float)*alignment->segsites); 
-  
+  assert(alignment->positions!=NULL);
+
   alignment->positionsInd = malloc(sizeof(int)*alignment->segsites);
+  assert(alignment->positionsInd!=NULL);
 
   if( alignment->segsites > 0)
     {
@@ -4364,15 +4382,24 @@ int readAlignmentMS(FILE *fp, alignment_struct *alignment, FILE * fpInfo, FILE *
   alignment->minn = MAXINT;
   
   alignment->sequences = 0;
-  
-  for(i=0;i<alignment->segsites;i++)
-    {
-      temp = fscanf(fp,"%f",&alignment->positions[i]);
-      assert(temp==1);		
-    }
 
-  for(i=0;i<alignment->segsites;i++)
-    alignment->positionsInd[i] = (int)(alignment->positions[i] * alignment->length);
+	for(i=0;i<alignment->segsites;i++)
+	{
+		temp = fscanf(fp,"%f",&alignment->positions[i]);
+		assert(temp==1);		
+	}
+  
+	if(fileFormatMBS==1)
+	{
+		for(i=0;i<alignment->segsites;i++)
+			alignment->positionsInd[i] = (int)(alignment->positions[i]);
+		 
+	}
+	else
+	{
+		for(i=0;i<alignment->segsites;i++)
+			alignment->positionsInd[i] = (int)(alignment->positions[i] * alignment->length);
+	}
   
   free(alignment->positions);
 
@@ -4698,13 +4725,13 @@ void extract_chromList(FILE * fpVCFchroms, FILE * fpInfo)
 	fprintf(fpInfo, " Number of chromosomes to be analyzed:\t%d\n",chromList_SZ);
 }
 
-int readAlignment(FILE *fp, int format, FILE * fpInfo, FILE *fpSFo, int minsnps_threshold_user, int alignmentIndex)
+int readAlignment(FILE *fp, int format, FILE * fpInfo, FILE *fpSFo, int minsnps_threshold_user, int alignmentIndex, int fileFormatMBS)
 {
   if(format == SF_FORMAT)
     return readAlignmentSF(fp, fpInfo, fpSFo, minsnps_threshold_user, alignmentIndex);
 
   if(format == MS_FORMAT)
-    return readAlignmentMS(fp, alignment, fpInfo, fpSFo, minsnps_threshold_user, alignmentIndex);
+    return readAlignmentMS(fp, alignment, fpInfo, fpSFo, minsnps_threshold_user, alignmentIndex, fileFormatMBS);
 
   if(format == MACS_FORMAT)
     return readAlignmentMACS(fp, alignment, fpInfo, fpSFo, minsnps_threshold_user, alignmentIndex);
