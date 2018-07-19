@@ -262,7 +262,9 @@ typedef struct
   double        sfPos;
   int 		sfRealPos; 
   t_sfs		likelihood; 
-  t_sfs		alpha; 
+  t_sfs		alpha;
+  int64_t	regBegin;
+  int64_t	regEnd; 
  
 } clr_struct;
 
@@ -328,7 +330,7 @@ void commandLineParser(int argc, char** argv,
 void removeMonomorphicSites (int strictPolymorphic, int monomorphic, double maf_thres, FILE * fp);
 
 t_sfs computeBaseLikelihood();
-t_sfs getAlpha (int sweepPosition, t_sfs * likelihood);
+t_sfs getAlpha (int sweepPosition, t_sfs * likelihood, int64_t * regBegin, int64_t * regEnd);
 
 
 int isBinary(char input);

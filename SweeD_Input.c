@@ -22,7 +22,6 @@
 
 void printVersion (FILE * fp)
 {
-
   
   	/* fprintf(fp,"\n\n"); */
 	/* fprintf(fp,"\tVersion:\t\t3.2.6\n\n"); */
@@ -94,11 +93,12 @@ void printVersion (FILE * fp)
 	fprintf(fp, "\tComment:\t\tAdded -maf input argument\n\n");
 	fprintf(fp,"\n\n");*/
 
-	fprintf(fp,"\n\n");
+	/*fprintf(fp,"\n\n");
 	fprintf(fp,"\tVersion:\t\t3.3.4\n\n");
 	fprintf(fp,"\tReleased:\t\tApril 2018\n\n");
 	fprintf(fp, "\tComment:\t\tAdded -mbs input argument\n\n");
-	fprintf(fp,"\n\n");
+	fprintf(fp,"\n\n");*/
+
   
   	/* fprintf(fp,"\n\n"); */
 	/* fprintf(fp,"\tVersion:\t\t3.2.4\n\n"); */
@@ -134,6 +134,12 @@ void printVersion (FILE * fp)
 //	fprintf(fp,"\tReleased:\t\tSeptember 2012\n\n");
 //	fprintf(fp,"\tComments:\t\tFirst release\n\n");
 //	fprintf(fp,"\n\n");
+
+	fprintf(fp,"\n\n");
+	fprintf(fp,"\tVersion:\t\t3.3.5\n\n");
+	fprintf(fp,"\tReleased:\t\tJuly 2018\n\n");
+	fprintf(fp, "\tComment:\t\tReports region borders per score\n\n");
+	fprintf(fp,"\n\n");
 }
 
 void printHelp (FILE * fp)
@@ -193,7 +199,7 @@ void printHelp (FILE * fp)
 	fprintf(fp,"\t-chromList_out <STRING> To generate a list of the chromosomes in the input VCF file.\n\n");
 	fprintf(fp,"\t-reports\t\tTo generate each alignment report in a separate file.\n\n");
 	fprintf(fp,"\t-maf <FLOAT>\t\tTo exclude SNPs with minor allele frequency < threshold.\n\n");
-	fprintf(fp,"\t-mbs\t\tTo specify that the input file is in mbs format (will be processed as if it was ms).\n\n");
+	fprintf(fp,"\t-mbs\t\t\tTo specify that the input file is in mbs format (will be processed as if it was ms).\n\n");
 	fprintf(fp,"\n\n");
 }
 

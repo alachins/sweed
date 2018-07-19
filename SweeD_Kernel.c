@@ -121,7 +121,7 @@ t_sfs splint(int x, int n, int gridSz, double ad)
 	return y;
 }
 
-t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startPos)
+t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startPos, int64_t * regBegin, int64_t * regEnd)
 {
 	int i, sweepDist, n, x, calcsDone = 0;
 
@@ -217,17 +217,22 @@ t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startP
 				assert(i<alignment->segsites);
 
 				if(badFlag == 0)
-				  likelihood += log(pr) - alignment->baseLikelihood[i];				
+				{
+				  likelihood += log(pr) - alignment->baseLikelihood[i];
+				  *regBegin = alignment->positionsInd[i];
+				}				
 				else
+				{
 				  likelihood += 0;
-
+				  *regBegin = alignment->positionsInd[i];
+				}
 			}
 			else
 				break;		
 		}
 	}
 
-
+	
 	calcsDone = 0;
 
 	for(i=startPos+1;i<alignment->segsites;i++)
@@ -310,10 +315,15 @@ t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startP
 				}
 				
 				if(badFlag == 0)
-				  likelihood += log(pr) - alignment->baseLikelihood[i];				
+				{
+				  likelihood += log(pr) - alignment->baseLikelihood[i];
+				  *regEnd = alignment->positionsInd[i];
+				}
 				else
-				  likelihood += 0; 
-
+				{
+				  likelihood += 0;
+                                  *regEnd = alignment->positionsInd[i];
+ 				}
 
 			}
 			else
@@ -321,6 +331,7 @@ t_sfs getLikelihood(int sweepPosition, t_sfs alpha, int * sweepWidth, int startP
 					break;		
 		}
 	}
+
 
 	return likelihood;
 }
@@ -359,7 +370,7 @@ void parallelComputationAlpha_thread(int tid, int threads)
 	{	
 		if(i%threads==tid)
 		{
-			clr[i].alpha = getAlpha (clr[i].sfRealPos, &clr[i].likelihood);
+			clr[i].alpha = getAlpha (clr[i].sfRealPos, &clr[i].likelihood, &clr[i].regBegin, &clr[i].regEnd);
 #ifdef _DO_CHECKPOINTS
 			writeCheckpoint();
 #endif
@@ -384,7 +395,7 @@ void computeAlpha_parallel(int grid)
 }
 #endif
 
-t_sfs getAlpha (int sweepPosition, t_sfs * likelihood)
+t_sfs getAlpha (int sweepPosition, t_sfs * likelihood, int64_t * regBegin, int64_t * regEnd)
 {
 	t_sfs minAlpha, maxAlpha, interval, tol=1.0e-6;
 
@@ -398,6 +409,8 @@ t_sfs getAlpha (int sweepPosition, t_sfs * likelihood)
 
 	startPos = getClosestSNPIndex (sweepPosition);
 
+	int64_t regBegint=sweepPosition, maxRegBegin=-1;
+	int64_t regEndt=sweepPosition, maxRegEnd=-1;
 
 	while((maxAlpha-minAlpha)/((maxAlpha+minAlpha)*0.5) > tol)
 	{
@@ -415,10 +428,14 @@ t_sfs getAlpha (int sweepPosition, t_sfs * likelihood)
 			if (i!=0 && sweepWidth[i-1]==0)
 				lik[i] = lik[i-1];
 			else 
-				lik[i] = getLikelihood(sweepPosition, val[i], &sweepWidth[i], startPos);
+				lik[i] = getLikelihood(sweepPosition, val[i], &sweepWidth[i], startPos, &regBegint, &regEndt);
 		
 			if (lik[i] > lik[maxPos])
+			{
 				maxPos = i;
+				maxRegBegin = regBegint;
+				maxRegEnd = regEndt;
+			}
 		}
 
 		if (maxPos==0) 
@@ -435,6 +452,8 @@ t_sfs getAlpha (int sweepPosition, t_sfs * likelihood)
 	}
 
 	*likelihood = lik[maxPos];
+	*regBegin = maxRegBegin;
+	*regEnd = maxRegEnd;
 
 	return val[maxPos];
 }

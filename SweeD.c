@@ -72,7 +72,7 @@ void printHeading (FILE * fp)
 	fprintf(fp,"\n\n                                      _______________");
 	fprintf(fp,"\n\n                                           SweeD");
 	fprintf(fp,"\n                                      _______________");
-	fprintf(fp,"\n\n\n\n SweeD version 3.3.4 released by Nikolaos Alachiotis and Pavlos Pavlidis in April 2018.\n");
+	fprintf(fp,"\n\n\n\n SweeD version 3.3.5 released by Nikolaos Alachiotis and Pavlos Pavlidis in July 2018.\n");
 }
 
 void printRunInfo (FILE * fp, int argc, char ** argv)
@@ -261,7 +261,9 @@ int main(int argc, char** argv)
 	unsigned int seed = 0;
 
 	double time0, time1, totalTimeL=.0, totalTimeG0 = gettime(), totalTimeG1, maxLH=0., maxALPHA=0., maxPOS=0., growthRate = 0., maf= 0.;
-	
+	int64_t	maxLH_regBegin = -1;
+	int64_t maxLH_regEnd = -1;
+
 	char inputFileName[INFILENAMESIZE],
 	     sfsFileName[INFILENAMESIZE],
 	     sfsoFileName[INFILENAMESIZE],
@@ -510,7 +512,7 @@ int main(int argc, char** argv)
 				fprintf(fpReport, "\n");
 			  
 			if( noSeparator == 0 || counterRepls == 1)
-				fprintf(fpReport,"Position\tLikelihood\tAlpha\n");		
+				fprintf(fpReport,"Position\tLikelihood\tAlpha\tStartPos\tEndPos\n");		
 		}
 
 		if(reports==1)
@@ -537,7 +539,7 @@ int main(int argc, char** argv)
 			fpReport = fopen(clrReportsFileName,"w");
 
 			if( noSeparator == 0 || counterRepls == 1)
-				fprintf(fpReport,"Position\tLikelihood\tAlpha\n");
+				fprintf(fpReport,"Position\tLikelihood\tAlpha\tStartPos\tEndPos\n");
 		}	  
 			  
 
@@ -660,18 +662,23 @@ int main(int argc, char** argv)
 				    {
 				      maxLH = clr[i].likelihood;
 				      maxALPHA = clr[i].alpha;
-				      maxPOS = clr[i].sfRealPos;			        					}
+				      maxPOS = clr[i].sfRealPos;
+				      maxLH_regBegin = clr[i].regBegin;
+				      maxLH_regEnd = clr[i].regEnd;
+				    }
 				}
 	#else
 			      for(i=0;i<grid;i++)
 				{	
-				  clr[i].alpha = getAlpha (clr[i].sfRealPos, &clr[i].likelihood);
+				  clr[i].alpha = getAlpha (clr[i].sfRealPos, &clr[i].likelihood, &clr[i].regBegin, &clr[i].regEnd);
 				  
 				  if(clr[i].likelihood>maxLH)
 				    {
 				      maxLH = clr[i].likelihood;
 				      maxALPHA = clr[i].alpha;
-				      maxPOS = clr[i].sfRealPos;					
+				      maxPOS = clr[i].sfRealPos;
+				      maxLH_regBegin = clr[i].regBegin;
+				      maxLH_regEnd = clr[i].regEnd;					
 				    }
 				  
 	#ifdef _DO_CHECKPOINTS
@@ -681,7 +688,7 @@ int main(int argc, char** argv)
 	#endif
 			      if(fpReport!=NULL)
 				for(i=0;i<grid;i++)
-				  fprintf(fpReport,"%.4f\t%e\t%e\n", clr[i].sfPos/* clr[i].sfRealPos*/, clr[i].likelihood,clr[i].alpha);		
+				  fprintf(fpReport,"%.4f\t%e\t%e\t%.4f\t%.4f\n", clr[i].sfPos/* clr[i].sfRealPos*/, clr[i].likelihood,clr[i].alpha,(double)clr[i].regBegin,(double)clr[i].regEnd);		
 			      
 			      
 			      time1 = gettime();
@@ -692,8 +699,8 @@ int main(int argc, char** argv)
 			      fprintf(fpInfo, ":\t\t%.2f seconds\n\n",totalTimeL);
 			      
 			      //if(fpInfo!=NULL)
-			      fprintf(stdout,"\t\tPosition:\t\t%e\n\t\tLikelihood:\t\t%e\n\t\tAlpha:\t\t\t%e\n\n\n",maxPOS,maxLH,maxALPHA);
-			      fprintf(fpInfo,"\t\tPosition:\t\t%e\n\t\tLikelihood:\t\t%e\n\t\tAlpha:\t\t\t%e\n\n\n",maxPOS,maxLH,maxALPHA);
+			      fprintf(stdout,"\t\tPosition:\t\t%e\n\t\tLikelihood:\t\t%e\n\t\tStartPos:\t\t%e\n\t\tEndPos:\t\t\t%e\n\t\tAlpha:\t\t\t%e\n\n\n",maxPOS,maxLH,(double)maxLH_regBegin, (double)maxLH_regEnd, maxALPHA);
+			      fprintf(fpInfo,"\t\tPosition:\t\t%e\n\t\tLikelihood:\t\t%e\n\t\tStartPos:\t\t%e\n\t\tEndPos:\t\t\t%e\n\t\tAlpha:\t\t\t%e\n\n\n",maxPOS,maxLH,(double)maxLH_regBegin, (double)maxLH_regEnd, maxALPHA);
 			      
 			      time0 = gettime();
 			      
