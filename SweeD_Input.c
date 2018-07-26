@@ -23,122 +23,116 @@
 void printVersion (FILE * fp)
 {
   
-  	/* fprintf(fp,"\n\n"); */
-	/* fprintf(fp,"\tVersion:\t\t3.2.6\n\n"); */
-	/* fprintf(fp,"\tReleased:\t\tMay 2014\n\n"); */
-	/* fprintf(fp, "\tComment:\t\tIt prints only the integer positions\n\n"); */
-	/* fprintf(fp,"\n\n"); */
+  	/* 
+	fprintf(fp,"\n\n"); 
+	fprintf(fp,"\tVersion:\t\t3.2.6\n\n"); 
+	fprintf(fp,"\tReleased:\t\tMay 2014\n\n"); 
+	fprintf(fp, "\tComment:\t\tIt prints only the integer positions\n\n"); 
+	fprintf(fp,"\n\n"); 
 
-	
-  	/* fprintf(fp,"\n\n"); */
-	/* fprintf(fp,"\tVersion:\t\t3.2.7\n\n"); */
-	/* fprintf(fp,"\tReleased:\t\tMay 2014\n\n"); */
-	/* fprintf(fp, "\tComment:\t\tHandles properly the ^M NEWLINE combinations\n\n"); */
-	/* fprintf(fp,"\n\n"); */
+	fprintf(fp,"\n\n"); 
+	fprintf(fp,"\tVersion:\t\t3.2.7\n\n"); 
+	fprintf(fp,"\tReleased:\t\tMay 2014\n\n"); 
+	fprintf(fp, "\tComment:\t\tHandles properly the ^M NEWLINE combinations\n\n"); 
+	fprintf(fp,"\n\n"); 
 
-	
-  	/* fprintf(fp,"\n\n"); */
-	/* fprintf(fp,"\tVersion:\t\t3.2.8\n\n"); */
-	/* fprintf(fp,"\tReleased:\t\tMay 2014\n\n"); */
-	/* fprintf(fp, "\tComment:\t\tFix a bug in recognizing the filetype\n\n"); */
-	/* fprintf(fp,"\n\n"); */
+	fprintf(fp,"\n\n"); 
+	fprintf(fp,"\tVersion:\t\t3.2.8\n\n"); 
+	fprintf(fp,"\tReleased:\t\tMay 2014\n\n"); 
+	fprintf(fp, "\tComment:\t\tFix a bug in recognizing the filetype\n\n"); 
+	fprintf(fp,"\n\n"); 
 
-	
-  	/* fprintf(fp,"\n\n"); */
-	/* fprintf(fp,"\tVersion:\t\t3.2.9\n\n"); */
-	/* fprintf(fp,"\tReleased:\t\tMay 2014\n\n"); */
-	/* fprintf(fp, "\tComment:\t\tAllows the distance between grid positions to be less than 1\n\n"); */
-	/* fprintf(fp,"\n\n"); */
+	fprintf(fp,"\n\n"); 
+	fprintf(fp,"\tVersion:\t\t3.2.9\n\n"); 
+	fprintf(fp,"\tReleased:\t\tMay 2014\n\n"); 
+	fprintf(fp, "\tComment:\t\tAllows the distance between grid positions to be less than 1\n\n"); 
+	fprintf(fp,"\n\n"); 
 
-	
-		
-//  	fprintf(fp,"\n\n");
-//	fprintf(fp,"\tVersion:\t\t3.2.10\n\n");
-//	fprintf(fp,"\tReleased:\t\tMay 2014\n\n");
-//	fprintf(fp, "\tComment:\t\tskips empty alignments or alignments with no polymorphic sites\n\n");
-//	fprintf(fp,"\n\n");
+	fprintf(fp,"\n\n");
+	fprintf(fp,"\tVersion:\t\t3.2.10\n\n");
+	fprintf(fp,"\tReleased:\t\tMay 2014\n\n");
+	fprintf(fp, "\tComment:\t\tskips empty alignments or alignments with no polymorphic sites\n\n");
+	fprintf(fp,"\n\n");
 
+	fprintf(fp,"\n\n"); 
+	fprintf(fp,"\tVersion:\t\t3.2.11\n\n"); 
+	fprintf(fp,"\tReleased:\t\tJuly 2014\n\n"); 
+	fprintf(fp, "\tComment:\t\tCan process only a subset of the VCF samples in the input file\n\n"); 
+	fprintf(fp,"\n\n"); 
 
- 	/* fprintf(fp,"\n\n"); */
-	/* fprintf(fp,"\tVersion:\t\t3.2.11\n\n"); */
-	/* fprintf(fp,"\tReleased:\t\tJuly 2014\n\n"); */
-	/* fprintf(fp, "\tComment:\t\tCan process only a subset of the VCF samples in the input file\n\n"); */
-	/* fprintf(fp,"\n\n"); */
-
-
-	
-      /*fprintf(fp,"\n\n");
+	fprintf(fp,"\n\n");
 	fprintf(fp,"\tVersion:\t\t3.2.12\n\n");
 	fprintf(fp,"\tReleased:\t\tNovember 2014\n\n");
 	fprintf(fp, "\tComment:\t\tCorrect a bug: We removed a free statement vcf_validsample\n\n");
-	fprintf(fp,"\n\n");*/
+	fprintf(fp,"\n\n");
 
-/* 	fprintf(fp,"\n\n");
+	fprintf(fp,"\n\n");
 	fprintf(fp,"\tVersion:\t\t3.3.0\n\n");
 	fprintf(fp,"\tReleased:\t\tDecember 2014\n\n");
 	fprintf(fp, "\tComment:\t\tAdded -minsnps flag\n\n");
 	fprintf(fp,"\n\n");
-*/
 
- 	/*fprintf(fp,"\n\n");
+	fprintf(fp,"\n\n");
 	fprintf(fp,"\tVersion:\t\t3.3.2\n\n");
 	fprintf(fp,"\tReleased:\t\tApril 2015\n\n");
 	fprintf(fp, "\tComment:\t\tCorrects some bugs on handling the outgroup\n\n");
 	fprintf(fp,"\n\n");
-	*/
 
-	/*fprintf(fp,"\n\n");
+	fprintf(fp,"\n\n");
 	fprintf(fp,"\tVersion:\t\t3.3.3\n\n");
 	fprintf(fp,"\tReleased:\t\tMarch 2018\n\n");
 	fprintf(fp, "\tComment:\t\tAdded -maf input argument\n\n");
-	fprintf(fp,"\n\n");*/
+	fprintf(fp,"\n\n");
 
-	/*fprintf(fp,"\n\n");
+	fprintf(fp,"\n\n");
 	fprintf(fp,"\tVersion:\t\t3.3.4\n\n");
 	fprintf(fp,"\tReleased:\t\tApril 2018\n\n");
 	fprintf(fp, "\tComment:\t\tAdded -mbs input argument\n\n");
-	fprintf(fp,"\n\n");*/
+	fprintf(fp,"\n\n");
 
-  
-  	/* fprintf(fp,"\n\n"); */
-	/* fprintf(fp,"\tVersion:\t\t3.2.4\n\n"); */
-	/* fprintf(fp,"\tReleased:\t\tMarch 2014\n\n"); */
-	/* fprintf(fp,"\n\n"); */
+	fprintf(fp,"\n\n"); 
+	fprintf(fp,"\tVersion:\t\t3.2.4\n\n"); 
+	fprintf(fp,"\tReleased:\t\tMarch 2014\n\n"); 
+	fprintf(fp,"\n\n"); 
 
+	fprintf(fp,"\n\n"); 
+	fprintf(fp,"\tVersion:\t\t3.1\n\n"); 
+	fprintf(fp,"\tReleased:\t\tJanuary 2013\n\n"); 
+	fprintf(fp,"\tComments:\t\t1. Fixed bug in the VCF parser that was associated with the handling of missing data\n"); 
+	fprintf(fp,"\n\n"); 
 
+	fprintf(fp,"\n\n");
+	fprintf(fp,"\tVersion:\t\t3.0\n\n");
+	fprintf(fp,"\tReleased:\t\tNovember 2012\n\n");
+	fprintf(fp,"\tComments:\t\t1. Anlaytical calculation of SFS\n");
+	fprintf(fp,"\n\n");
 
-  	/* fprintf(fp,"\n\n"); */
-	/* fprintf(fp,"\tVersion:\t\t3.1\n\n"); */
-	/* fprintf(fp,"\tReleased:\t\tJanuary 2013\n\n"); */
-	/* fprintf(fp,"\tComments:\t\t1. Fixed bug in the VCF parser that was associated with the handling of missing data\n"); */
-	/* fprintf(fp,"\n\n"); */
+	fprintf(fp,"\n\n");
+	fprintf(fp,"\tVersion:\t\t2.6\n\n");
+	fprintf(fp,"\tReleased:\t\tNovember 2012\n\n");
+	fprintf(fp,"\tComments:\t\t1. Scalable for more than 1000 sequences\n");
+	fprintf(fp,"\t\t\t\t2. Parallel version using POSIX threads\n");
+	fprintf(fp,"\t\t\t\t3. Bug fixes\n");
+	fprintf(fp,"\n\n");
 
-
-	
-//	fprintf(fp,"\n\n");
-//	fprintf(fp,"\tVersion:\t\t3.0\n\n");
-//	fprintf(fp,"\tReleased:\t\tNovember 2012\n\n");
-//	fprintf(fp,"\tComments:\t\t1. Anlaytical calculation of SFS\n");
-//	fprintf(fp,"\n\n");
-
-//	fprintf(fp,"\n\n");
-//	fprintf(fp,"\tVersion:\t\t2.6\n\n");
-//	fprintf(fp,"\tReleased:\t\tNovember 2012\n\n");
-//	fprintf(fp,"\tComments:\t\t1. Scalable for more than 1000 sequences\n");
-//	fprintf(fp,"\t\t\t\t2. Parallel version using POSIX threads\n");
-//	fprintf(fp,"\t\t\t\t3. Bug fixes\n");
-//	fprintf(fp,"\n\n");
-
-//	fprintf(fp,"\n\n");
-//	fprintf(fp,"\tVersion:\t\t1.0\n\n");
-//	fprintf(fp,"\tReleased:\t\tSeptember 2012\n\n");
-//	fprintf(fp,"\tComments:\t\tFirst release\n\n");
-//	fprintf(fp,"\n\n");
+	fprintf(fp,"\n\n");
+	fprintf(fp,"\tVersion:\t\t1.0\n\n");
+	fprintf(fp,"\tReleased:\t\tSeptember 2012\n\n");
+	fprintf(fp,"\tComments:\t\tFirst release\n\n");
+	fprintf(fp,"\n\n");
 
 	fprintf(fp,"\n\n");
 	fprintf(fp,"\tVersion:\t\t3.3.5\n\n");
 	fprintf(fp,"\tReleased:\t\tJuly 2018\n\n");
 	fprintf(fp, "\tComment:\t\tReports region borders per score\n\n");
+	fprintf(fp,"\n\n");
+*/
+	fprintf(fp,"\n\n");
+	fprintf(fp,"\tVersion:\t\t4.0.0\n\n");
+	fprintf(fp,"\tReleased:\t\tJuly 2018\n\n");
+	fprintf(fp, "\tComments:\t\t1. Reads a grid file that comprises multiple lines in the format [CHROM_NAME GRID_LOCATION]\n");
+	fprintf(fp, "\t\t\t\t2. Reads the ploidy to correctly represent missing data in VCF files.\n");
+	fprintf(fp, "\t\t\t\t3. Discards sites based on a user-provided threshold for max. missing data per SNP.\n");	
 	fprintf(fp,"\n\n");
 }
 
@@ -171,6 +165,9 @@ void printHelp (FILE * fp)
 	fprintf(fp,"\t[-reports]\n");
 	fprintf(fp,"\t[-maf threshold]\n");
 	fprintf(fp,"\t[-mbs]\n");
+	fprintf(fp,"\t[-gridFile filename]\n");
+	fprintf(fp,"\t[-ploidy ploidyNumber]\n");
+	fprintf(fp,"\t[-missing maxMissingDataPercentage]\n");
 	fprintf(fp,"\n\n");
 	
 	fprintf(fp,"\t-name <STRING>\t\tSpecifies a name for the run and the output files.\n\n");
@@ -200,6 +197,9 @@ void printHelp (FILE * fp)
 	fprintf(fp,"\t-reports\t\tTo generate each alignment report in a separate file.\n\n");
 	fprintf(fp,"\t-maf <FLOAT>\t\tTo exclude SNPs with minor allele frequency < threshold.\n\n");
 	fprintf(fp,"\t-mbs\t\t\tTo specify that the input file is in mbs format (will be processed as if it was ms).\n\n");
+	fprintf(fp, "\t-gridFile <STRING>\tProvides a file with the candidate locations to evaluate (for VCF only).\n\n");
+	fprintf(fp, "\t-ploidy <INTEGER>\tProvides an integer specifying the ploidy (default: 2).\n\n");
+	fprintf(fp, "\t-missing <FLOAT>\tProvides a maximum percentage of missing data allowed per site.\n\n");
 	fprintf(fp,"\n\n");
 }
 
@@ -405,7 +405,8 @@ void commandLineParser(int argc, char** argv,
 		       int * minsnps_threshold_user,
 		       int * reports,
 		       double * maf,
-		       int * fileFormatMBS)
+		       int * fileFormatMBS,
+		       char *gridFileName)
 {
 
 #ifdef _USE_PTHREADS
@@ -415,6 +416,8 @@ void commandLineParser(int argc, char** argv,
 	int nameSet = 0, fileSet=0, gridSet=0, i, lengthSet=0;
 	
 	FILE *fp, *fp2;
+	ploidy = 2;
+	max_perc_missing = 1.;
 	
 	strcpy(runName,"x");
 
@@ -424,7 +427,23 @@ void commandLineParser(int argc, char** argv,
 
 	for(i=1; i<argc; ++i)
 	{
+	  if(!strcmp(argv[i], "-gridFile")){
+	    *grid = 10; // just a number not to complain. The grid will be updated with the correct value later. 
+	    strcpy(gridFileName, argv[++i]);
+	    continue;
+	  }
 
+	  if(!strcmp(argv[i], "-missing")){
+	    max_perc_missing = atof(argv[++i]);
+	    continue;
+	  }
+
+          if(!strcmp(argv[i], "-ploidy"))
+            {
+              ploidy = atoi(argv[++i]);
+              continue;
+            }
+	  
 	  if(!strcmp(argv[i], "-noSeparator") || !strcmp(argv[i], "-noseparator"))
 	    {
 	      *noSeparator = 1;
@@ -2987,6 +3006,13 @@ int readAlignmentFASTA(FILE *fp, alignment_struct *alignment, FILE *fpInfo, FILE
 	for(i=0;i<alignment->segsites;i++)
 		alignment->positionsInd[i]=i+1;
 
+	if(outgroupCounter == 1 && alignment->userSetFolded == 1)
+	  {
+	    fprintf(stderr, "Warning: BOTH outgroup AND folded are provided.... FOLDED is considered\n\n\n");
+	    for(i=0;i<alignment->segsites;i++)
+	      alignment->folded[i] = alignment->userSetFolded;
+	  }
+	
 	if(outgroupCounter==0)
 	{
 		fprintf(stdout,"\t\tOutgroup:\t\tnone\n");
@@ -3463,7 +3489,7 @@ void dataShuffleKnuth(char * data, int startIndex, int endIndex)
 
 void getGTdata (char * string, char * stateVector, int statesTotal, char * sampleData)
 {
-	int i, j=0, index=0, start=0, end=0, len = strlen(string);
+  int i, jj = 0, j=0, index=0, start=0, end=0, len = strlen(string);
 
 	for(i=0;i<len;i++)
 	{	
@@ -3479,7 +3505,14 @@ void getGTdata (char * string, char * stateVector, int statesTotal, char * sampl
 		{
 			if(string[i]=='.')
 			{
-				sampleData[j++] = 'N';
+			  if(len == 1 && ploidy > 1){
+			    for(jj = 0; jj < ploidy; ++jj){
+                              sampleData[j++] = 'N';
+                            }
+                          }
+                          else{
+                            sampleData[j++] = 'N';
+                          }
 			}
 			
 			if(string[i]=='/')
@@ -3517,6 +3550,11 @@ void processSampleVCF (char * string, int GTpos, char ** sampleData, int * sampl
 	getGTdata (string, stateVector, statesTotal, *sampleData);
 
 	(*sampleData)[dataSize]=0;
+
+	/* TODO: check next 2 lines */
+	//(*sampleData)[strlen(*sampleData)] = 0;
+	//(*sampleData)[dataSize]=0;
+	
 }
 
 
@@ -3933,7 +3971,7 @@ int readAlignmentVCF(FILE *fp, alignment_struct * alignment, FILE *fpInfo, FILE 
 
 	int inAlignment = 1, lineIndex=-1, i;
 
-	int sampleDataMemSize = 2;
+	int sampleDataMemSize = 2; /* TODO: check, I had 10 here */
 	char ** sampleData = (char **) malloc(sizeof(char*));
 	(*sampleData) = (char *) malloc(sizeof(char)*sampleDataMemSize);
 
@@ -3985,6 +4023,10 @@ int readAlignmentVCF(FILE *fp, alignment_struct * alignment, FILE *fpInfo, FILE 
 
 	for(i=0;i<alignment->segsites;i++)
 	{
+	  if(alignment->userSetFolded == 1)
+	    alignment->folded[i] = alignment->userSetFolded;
+
+	  
 		if(alignment->n[i]<alignment->minn)
 			alignment->minn = alignment->n[i];
 
@@ -4076,7 +4118,14 @@ void removeMonomorphicSites (int strictPolymorphic, int monomorphic, double maf_
 	    {
 	      if(alignment->positionsInd[i]==-1)//if(alignment->n[i] == 0)
 		continue;
-	      
+
+	      if( max_perc_missing < 1. && (1.0*alignment->sequences - alignment->n[i] > alignment->sequences * max_perc_missing ))
+		{
+		  alignment->positionsInd[i]=-1;
+		  counter++;
+		  continue;
+		}
+	    	      
 	      if( (alignment->n[i]==alignment->sequences && (alignment->x[i]==0 || alignment->x[i]==alignment->n[i]) ) ||
 		  (strictPolymorphic == 1 && alignment->n[i] < alignment->sequences &&  alignment->x[i] == 0  ) ||
 		  (strictPolymorphic == 1 && alignment->n[i] < alignment->sequences &&  alignment->x[i] == alignment->n[i]  ))
@@ -4167,6 +4216,8 @@ void removeMonomorphicSites (int strictPolymorphic, int monomorphic, double maf_
 
 	fprintf(stdout,"\n\t\tDiscarded sites:\t%d",counter + alignment->discSites);	
 	fprintf(fp,"\n\t\tDiscarded sites:\t%d",counter + alignment->discSites);
+	fprintf(stdout,"\n\t\tKept sites:\t%d",alignment->segsites - alignment->discSites);	
+	fprintf(fp,"\n\t\tKept sites:\t%d",alignment->segsites - alignment->discSites);
 }
 
 int readAlignmentMACS(FILE *fp, alignment_struct *alignment, FILE *fpInfo, FILE *fpSFo, int minsnps_threshold_user, int alignmentIndex)
@@ -4196,11 +4247,13 @@ int readAlignmentMACS(FILE *fp, alignment_struct *alignment, FILE *fpInfo, FILE 
 	alignment->positions = calloc(DIM, sizeof(float));
 	assert(alignment->positions != NULL);
 
+	alignment->mutationTime = calloc(DIM, sizeof(float));
+	assert(alignment->mutationTime != NULL);
 	
 	// read first line 
-	int temp = fscanf(fp, "%f", &alignment->positions[0]);
-	assert(temp==1);
-
+	int temp = fscanf(fp, "%f %f", &alignment->positions[0], &alignment->mutationTime[0]);
+	assert(temp==2);
+	
 	alignment->sequences = 0;
 
 
@@ -4246,7 +4299,9 @@ int readAlignmentMACS(FILE *fp, alignment_struct *alignment, FILE *fpInfo, FILE 
 		
 		alignment->positions = realloc(alignment->positions, DIM*sizeof(float));
 		assert(alignment->positions != NULL);
-		
+
+		alignment->mutationTime = realloc(alignment->mutationTime, DIM*sizeof(float));
+		assert(alignment->mutationTime != NULL);		
 		
 		for(i=prevDIM; i<DIM; ++i)
 		  {
@@ -4261,8 +4316,8 @@ int readAlignmentMACS(FILE *fp, alignment_struct *alignment, FILE *fpInfo, FILE 
 	    
 	    if(!strcmp(siteflag,"SITE:"))
 	      {
-		temp = fscanf(fp, "%d %f",&sitevar, &alignment->positions[nsnp]);
-		assert(temp==2);
+		temp = fscanf(fp, "%d %f %f",&sitevar, &alignment->positions[nsnp], &alignment->mutationTime[nsnp]);
+		assert(temp==3);
 
 		ent = fgetc(fp);
 

@@ -69,10 +69,11 @@ double gettime(void)
 
 void printHeading (FILE * fp)
 {
-	fprintf(fp,"\n\n                                      _______________");
-	fprintf(fp,"\n\n                                           SweeD");
-	fprintf(fp,"\n                                      _______________");
-	fprintf(fp,"\n\n\n\n SweeD version 3.3.5 released by Nikolaos Alachiotis and Pavlos Pavlidis in July 2018.\n");
+  fprintf(fp,"\n\n                                      _______________");
+  fprintf(fp,"\n\n                                           SweeD");
+  fprintf(fp,"\n                                      _______________");
+  fprintf(fp,"\n\n\n\n SweeD version 4.0.0 released by Nikolaos Alachiotis and Pavlos Pavlidis in July 2018.\n");
+  fprintf(fp," Code contributions by Antonis Kioukis and Aggelos Koropoulis.\n");
 }
 
 void printRunInfo (FILE * fp, int argc, char ** argv)
@@ -265,22 +266,24 @@ int main(int argc, char** argv)
 	int64_t maxLH_regEnd = -1;
 
 	char inputFileName[INFILENAMESIZE],
-	     sfsFileName[INFILENAMESIZE],
-	     sfsoFileName[INFILENAMESIZE],
-	     sfoFileName[INFILENAMESIZE],
-	     infoFileName[INFILENAMESIZE], 
-	     clrReportFileName[INFILENAMESIZE],
-	     clrReportsFileName[INFILENAMESIZE], 
-	     warnFileName[INFILENAMESIZE],
-	     sampleVCFfileName[INFILENAMESIZE],
-	     chromVCFfileName[INFILENAMESIZE],
-	     sfoFileName_base[INFILENAMESIZE];
+	  sfsFileName[INFILENAMESIZE],
+	  sfsoFileName[INFILENAMESIZE],
+	  sfoFileName[INFILENAMESIZE],
+	  infoFileName[INFILENAMESIZE], 
+	  clrReportFileName[INFILENAMESIZE],
+	  clrReportsFileName[INFILENAMESIZE], 
+	  warnFileName[INFILENAMESIZE],
+	  sampleVCFfileName[INFILENAMESIZE],
+	  chromVCFfileName[INFILENAMESIZE],
+	  sfoFileName_base[INFILENAMESIZE],
+	  gridFileName[INFILENAMESIZE];
 
 	FILE *fpIn=NULL, *fpInfo=NULL, *fpWarnings=NULL, *fpReport=NULL, *fpSFS=NULL, *fpSFSo=NULL, *fpSFo=NULL, *fpVCFsamples=NULL, *fpVCFchroms=NULL;
 	
 	char outgroupName[SEQNAMESIZE];
-
+	chromList = NULL;
 	chromList = malloc(sizeof(char**));
+	*chromList = NULL;
 	chromList_SZ = -1;
 
 	int alignment_analysis_code=0;
@@ -291,6 +294,7 @@ int main(int argc, char** argv)
 	inputFileName[0] = '\0';
 	sampleVCFfileName[0]='\0';
 	chromVCFfileName[0]='\0';
+	gridFileName[0] = '\0';
 
 	div6 = 1.0 / 6.0;
 
@@ -333,11 +337,13 @@ int main(int argc, char** argv)
 			  &minsnps_threshold_user,
 			  &reports,
 			  &maf,
-			  &fileFormatMBS);
+			  &fileFormatMBS,
+			  gridFileName);
 
 
 	alignment = (alignment_struct *)malloc(sizeof(alignment_struct));
-
+	alignment->VCFsample_valid = NULL;
+	
 	if(sfsoFileName[0]!='\0')
 		fpSFSo = fopen(sfsoFileName,"w");
 
@@ -420,7 +426,7 @@ int main(int argc, char** argv)
 	
 
 
-
+	
 
 	alignment->length = alignmentLength;
 
@@ -638,16 +644,17 @@ int main(int argc, char** argv)
 			  printf("\n");
 			  writeCheckpoint();
 	#endif
-			  
-			  if(onlySFS==0)
+
+			   if(onlySFS==0)
 			    {
-			      createCLR (grid);
-			      
+
+			      if(gridFileName[0] != '\0')
+				createCLRFile(gridFileName, &grid);
+			      else
+				createCLR (grid);
+
 			      createPROBS (GRIDSIZE);	
-			      
 			      computeBaseLikelihood();
-			      
-			      
 			      
 	#ifdef _DO_CHECKPOINTS
 			      writeCheckpoint();
@@ -760,7 +767,7 @@ int main(int argc, char** argv)
 		alignment->SFS = NULL;
 	}
 
-	if(alignment->VCFsample_valid!=NULL)
+	if(alignment->VCFsample_valid != NULL)
 	{
 		free(alignment->VCFsample_valid);
 		alignment->VCFsample_valid = NULL;
@@ -768,15 +775,15 @@ int main(int argc, char** argv)
 
 	if(chromList!=NULL)
 	{
-		if(*chromList!=NULL)
-		{
-			for(i=0;i<chromList_SZ;i++)
-				if((*chromList)[i]!=NULL)
-					free((*chromList)[i]);
-
-			free(*chromList);
-		}
-		free(chromList);
+	  if(*chromList!=NULL)
+	    {
+	      for(i=0;i<chromList_SZ;i++)
+		if((*chromList)[i]!=NULL)
+		  free((*chromList)[i]);
+	      
+	      free(*chromList);
+	    }
+	  free(chromList);
 	}
 
 

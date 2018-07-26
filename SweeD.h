@@ -124,7 +124,7 @@ char bits_in_16bits [0x1u << 16];
 int linkage_disequilibrium;
 
 int borderTol;
-
+int ploidy;
 int VCF_header_lines;
 char VCF_alignment_name [MAX_CHROM_NAME_VCF];
 char VCF_alignment_name_prev_to_print [MAX_CHROM_NAME_VCF];
@@ -133,6 +133,7 @@ char *** chromList;
 int chromList_SZ;
 
 int nxtVCFalignment;
+double max_perc_missing;
 
 char runName[INFILENAMESIZE];
 
@@ -169,6 +170,7 @@ typedef struct
 	al_t *x; // number of derived bases in every site
 	al_t *x_t; // number of derived bases in every site
 	float 	       * positions;
+  float *mutationTime;
 	int 	       * positionsInd;
 	int 	       * p_t;
 	unsigned char *folded;
@@ -192,7 +194,6 @@ typedef struct
 	al_t * stateC;
 	al_t * stateG;
 	al_t * stateT;
-
 
 	t_sfs * SFS;
 	t_sfs * tmpSFS;
@@ -324,7 +325,8 @@ void commandLineParser(int argc, char** argv,
 		       int * minsnps_threshold_user,
 		       int * reports,
 		       double * maf,
-		       int * fileFormatMBS
+		       int * fileFormatMBS,
+		       char *gridFileName
 );
 
 void removeMonomorphicSites (int strictPolymorphic, int monomorphic, double maf_thres, FILE * fp);
@@ -381,6 +383,7 @@ void checkSNIPPositions (FILE* fp, alignment_struct * alignment, int index);
 
 void createSFS (FILE * fpSFS, FILE * fpSFSo, int alignmentIndex, int * SFSsize);
 void createCLR (int grid);
+void createCLRFile (char *gridFile, int *grid);
 void createPROBS (int probGrid);
 void createPatterns(void);
 void computeFactLUT(void);

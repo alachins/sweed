@@ -21,19 +21,70 @@
 
 #include "SweeD.h"
 
+
+void createCLRFile(char *inputFile, int *grid){
+  FILE *gridFile = fopen(inputFile, "r");
+  char line[1024];
+  int i = 0, startsnp, endsnp;
+
+  (*grid) = 2;
+  
+  clr = (clr_struct *)malloc(sizeof(clr_struct) * (*grid));
+  for(i=0;i<alignment->segsites;i++)
+    if(alignment->positionsInd[i]!=-1)
+      break;
+
+  assert(i != alignment->segsites);
+  startsnp = alignment->positionsInd[i];
+
+  for(i=alignment->segsites-1;i>-1;i--)
+    if(alignment->positionsInd[i]!=-1)
+      break;
+
+  assert(i!=-1);
+  endsnp = alignment->positionsInd[i];
+
+  i = 0;
+  while( fgets(line, sizeof(line), gridFile) != NULL)
+    {
+      /* fprintf(stderr, "%s %d %c %c\n", line, strlen(line), line[0], line[1]); */
+
+      /* if(strlen(line) > 1 && line[0] == '/' && line[1] == '/') */
+      /* 	break; */
+      
+      ++i;
+      const char* v1 = strtok(line, "\t \n");
+      const char* v2 = strtok(NULL, "\t \n");
+      if( i + 2 >= *grid ){
+	*grid += *grid;
+	clr = (clr_struct *)realloc(clr, sizeof(clr_struct)*(*grid));
+      }
+      clr[i].sfRealPos = atoi(v2);
+      clr[i].sfPos = atoi(v2);
+    }
+  
+  *grid = i + 2;
+
+  clr[0].sfRealPos = startsnp;
+  clr[0].sfPos = startsnp;
+  clr[*grid-1].sfRealPos = clr[*grid-1].sfPos = endsnp;
+  fclose(gridFile);
+}
+
+
+
 void createCLR (int grid) // composite likelihood ratio
 {
 	int i, startsnp, endsnp;
 	float step;
 
 	assert(grid>1);
-
+	
 	clr = (clr_struct *)malloc(sizeof(clr_struct)*grid);
-
 	for(i=0;i<alignment->segsites;i++)
-		if(alignment->positionsInd[i]!=-1)
-			break;
-
+	  if(alignment->positionsInd[i]!=-1)
+	    break;
+	
 	assert(i!=alignment->segsites);
 
 	startsnp = alignment->positionsInd[i];
