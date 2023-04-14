@@ -345,7 +345,7 @@ void printFloatArray(float *array, int n);
 
 void printCharArray(char *array, int n);
 
-int isEndOfLine(char ent);
+int isEndOfLine(signed char ent);
 
 void goToLineEnd(FILE *fp);
 
@@ -373,9 +373,9 @@ int isValidDNACharacter(char input);
 
 void parseIndividual(char *word, char** genotype, char delimiter, int token, char* states, char phased, char unphased, int *ploidy, int *max_ploidy);
 
-void ignoreAll(FILE * fp, char * ent);
+void ignoreAll(FILE * fp, signed char * ent);
 
-int isSpace(char ent);
+int isSpace(signed char ent);
 
 double XchooseY_ln(int x, int y);
 

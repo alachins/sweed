@@ -236,7 +236,7 @@ int flagMatch(FILE *fp, char flag[], int flaglength, char tmp)
 
 
 
-void ignoreLineSpaces(FILE *fp, char *ent)
+void ignoreLineSpaces(FILE *fp, signed char *ent)
 {
 	while(*ent==' '|| *ent == 9) // horizontal tab
 		*ent = fgetc(fp);  
@@ -245,7 +245,7 @@ void ignoreLineSpaces(FILE *fp, char *ent)
 
 int getFileFormat (FILE * fp)
 {
-	char tmp;
+	signed char tmp;
 
 	int cnt = 0;
 
@@ -1293,7 +1293,7 @@ void commandLineParser(int argc, char** argv,
 	}
 }
 
-void ignoreNewLineChars(FILE *fp, char *ent)
+void ignoreNewLineChars(FILE *fp, signed char *ent)
 {
 
   int brk = 0;
@@ -1316,7 +1316,7 @@ void ignoreNewLineChars(FILE *fp, char *ent)
 
 }
 
-int isEndOfLine2(char ent)
+int isEndOfLine2(signed char ent)
 {
 	if(ent == 10 || ent == 13)
 		return 1;
@@ -1331,7 +1331,7 @@ int getNextString(FILE *fp, char ** word, int *readEOL, int *readEOF, int *wordL
   
   *readEOL = *readEOF = 0;
 
-  char ent = fgetc(fp);
+  signed char ent = fgetc(fp);
 
   /* if( ent == 10 || ent == 13) */
   /*   iseol++; */
@@ -1439,7 +1439,7 @@ int getNextString_all_lines(FILE *fp, char ** word, int *readEOL, int *readEOF, 
 
 int findFirstAlignment(FILE *fp, int format, FILE *fpVCFsamples, int generateVCFsamplelist, char * vcf_samples_filename, FILE * fpInfo)
 {
-	char tmp;
+	signed char tmp;
 	int temp=-1, tip = 0, i;
 
 	if(format==FASTA_FORMAT)
@@ -1692,7 +1692,7 @@ int findFirstAlignment(FILE *fp, int format, FILE *fpVCFsamples, int generateVCF
 
 int findNextAlignment(FILE *fp, int fileFormat)
 {
-	char stop,tmp;
+	signed char stop,tmp;
 	int temp=-1;
 
 	if (fileFormat == MS_FORMAT || fileFormat == SF_FORMAT)
@@ -2245,7 +2245,7 @@ int isEOFnear(FILE *fp, char *ent)
 	return 0;
 }
 
-void ignoreSpaces(FILE * fp, char * ent)
+void ignoreSpaces(FILE * fp, signed char * ent)
 {
 	while(*ent != EOF && (*ent==10 || *ent==13 || *ent==32 || *ent==9) )
 		*ent = fgetc(fp);
@@ -2431,7 +2431,7 @@ int parseInfoVar(char *word, char *type, int start)
 
 void goToLineEnd(FILE *fp)
 {
-	char ent;
+	signed char ent;
 	while( (ent = fgetc(fp) ) != EOF )
 	  {
 	    
@@ -2573,7 +2573,7 @@ int isOutgroup (char * seqName, char * outgroup)
 }
 
 
-void updateStateCounters (alignment_struct * alignment, char ent, int index)
+void updateStateCounters (alignment_struct * alignment, signed char ent, int index)
 {
 	if(ent==AD || ent == ade)
 	{
@@ -2603,7 +2603,7 @@ void updateStateCounters (alignment_struct * alignment, char ent, int index)
 int readFASTAsequenceLight(FILE * fp, alignment_struct * alignment, char * seqName, int outgroup)
 {	
 	int DIM = 10, i=0, y=0;
-	char ent;
+	signed char ent;
 
 	if(alignment->segsites==-1)
 	{	
@@ -3096,7 +3096,7 @@ void checkSNIPPositions (FILE* fp, alignment_struct * alignment, int index)
 	fprintf(fp,"\n");	
 }
 
-int isEndOfLine(char ent)
+int isEndOfLine(signed char ent)
 {
 	if(ent == 10|| ent == 13 || ent == 32)
 		return 1;
@@ -3106,7 +3106,7 @@ int isEndOfLine(char ent)
 
 
 
-int isSpace(char ent)
+int isSpace(signed char ent)
 {
 	if(ent == 9 || ent == 32)
 		return 1;
@@ -3116,7 +3116,7 @@ int isSpace(char ent)
 
 
 
-void ignoreAll(FILE * fp, char * ent)
+void ignoreAll(FILE * fp, signed char * ent)
 {
 	while(*ent < 33 && *ent != EOF)
 		*ent = fgetc(fp);
@@ -3124,7 +3124,7 @@ void ignoreAll(FILE * fp, char * ent)
 
 int skipLine (FILE * fp)
 {
-	char tmp;
+	signed char tmp;
 
 	while( (tmp = fgetc(fp) ) != EOF)
 	  if(tmp == 10 || tmp == 13)
@@ -3562,7 +3562,7 @@ int readLine_VCF (FILE * fp, char ** string, int lineIndex, alignment_struct * a
 {
 
   int eol=0, eof=0, maxLength=STRINGLENGTH;
-  char tmp;
+  signed char tmp;
   int elementIndex = -1, lineSkipped=0, isEOF = 1, i,j=0, y, s=0, tip = 0;
 
 	char stateVector[MAX_STATES_VCF+1]; 
@@ -3754,6 +3754,7 @@ int readLine_VCF (FILE * fp, char ** string, int lineIndex, alignment_struct * a
 
 		if(elementIndex == VCF_HLENGTH-1 || eol==1 || eof==1 || lineSkipped==1)		
 			break;
+
 	}
 
 	if (eof== 1 || position == -1)
@@ -4227,7 +4228,7 @@ int readAlignmentMACS(FILE *fp, alignment_struct *alignment, FILE *fpInfo, FILE 
 	fprintf(fpInfo," Alignment %d\n",alignmentIndex);
 
 	int  i, DIM = 2, prevDIM;
-	char ent;
+	signed char ent;
 	int nsnp = 0;
 	int sitevar;
 	char siteflag[100];
@@ -4396,7 +4397,8 @@ int readAlignmentMS(FILE *fp, alignment_struct *alignment, FILE * fpInfo, FILE *
 	fprintf(stdout," Alignment %d\n",alignmentIndex);			
 	fprintf(fpInfo," Alignment %d\n",alignmentIndex);
 
-  char ent, stringtemp[100];
+  char stringtemp[100];
+  signed char ent;
   
 	
   /* get rid of the first line information */
@@ -4558,7 +4560,7 @@ int readAlignmentSF(FILE *fp, FILE * fpInfo, FILE *fpSFo, int minsnps_threshold_
   char *fgetsValue = NULL; 
   double position = 0.;
   char tmpString[100];
-  char ent;
+  signed char ent;
   char line[LEN];
 
   alignment->x = calloc(DIM, sizeof(al_t));
@@ -4587,7 +4589,7 @@ int readAlignmentSF(FILE *fp, FILE * fpInfo, FILE *fpSFo, int minsnps_threshold_
 
       cnt++;
 
-      char charTMP = fgetc(fp);
+      signed char charTMP = fgetc(fp);
       
       ungetc(charTMP, fp);
 
