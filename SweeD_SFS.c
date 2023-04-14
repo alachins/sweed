@@ -446,6 +446,7 @@ void createSFS (FILE * fpSFS, FILE * fpSFSo, int alignmentIndex, int * SFSsize)
 {
 	int i;
 	static int allocSFS = 1;
+	signed char t;
 
 	if(allocSFS==1)
 	{
