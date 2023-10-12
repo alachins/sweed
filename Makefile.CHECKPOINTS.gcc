@@ -3,7 +3,7 @@
 
 CC = gcc
 
-CFLAGS = -Wall -O3 -D_DO_CHECKPOINTS
+CFLAGS = -fcommon -Wall -O3 -D_DO_CHECKPOINTS
 
 LIBRARIES = -lm
 

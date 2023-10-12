@@ -3,7 +3,7 @@
 
 CC = gcc
 
-CFLAGS = -Wall -O3 -D_ANALYTICAL_SFS
+CFLAGS = -fcommon -Wall -O3 -D_ANALYTICAL_SFS
 
 LIBRARIES = -lm -lmpfr -lgmp
 
