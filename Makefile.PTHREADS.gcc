@@ -3,7 +3,7 @@
 
 CC = gcc
 
-CFLAGS = -O3 -Wall -D_USE_PTHREADS -D_GNU_SOURCE
+CFLAGS = -fcommon -O3 -Wall -D_USE_PTHREADS -D_GNU_SOURCE
 
 LIBRARIES = -lm -lpthread
 
